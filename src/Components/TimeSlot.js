@@ -47,6 +47,9 @@ export class TimeSlot extends React.Component {
     changeEndTime = (e) => {
         this.setState({ EndTime: e.target.value });
     }
+    changeRoomId = (e) => {
+        this.setState({ RoomId: e.target.value });
+    }
 
     addClick() {
         this.setState({
@@ -78,7 +81,8 @@ export class TimeSlot extends React.Component {
             body: JSON.stringify({
                 TSCode: this.state.TSCode,
                 StartTime: this.state.StartTime,
-                EndTime: this.state.EndTime
+                EndTime: this.state.EndTime,
+                RoomId:this.state.RoomId
             })
         })
             .then(res => res.json())
@@ -101,7 +105,9 @@ export class TimeSlot extends React.Component {
                 TSId: this.state.TSId,
                 TSCode: this.state.TSCode,
                 StartTime: this.state.StartTime,
-                EndTime: this.state.EndTime
+                EndTime: this.state.EndTime,
+                RoomId:this.state.RoomId
+                
             })
         })
             .then(res => res.json())
@@ -142,7 +148,8 @@ export class TimeSlot extends React.Component {
             TSId,
             TSCode,
             StartTime,
-            EndTime
+            EndTime,
+            Rooms
         } = this.state;
 
         return (
@@ -226,14 +233,16 @@ export class TimeSlot extends React.Component {
                                     <input type="text" className="form-control" value={EndTime} onChange={this.changeEndTime} />
                                 </div>
                                 <div class="input-group mb-3">
-                                    <label class="input-group-text" for="inputGroupSelect01">Options</label>
-                                    <select class="form-select" id="inputGroupSelect01">
-                                        <option selected>Choose...</option>
-                                        <option value="1">One</option>
-                                        <option value="2">Two</option>
-                                        <option value="3">Three</option>
-                                    </select>
-                                </div>
+                                <label class="input-group-text" for="inputGroupSelect01">Rooms</label>
+                                <select class="form-select" id="inputGroupSelect01" select onChange={(e)=>{this.changeRoomId(e)}}>
+            
+                                {Rooms.map((r)=>{
+                                    return(
+                                    <option value={r.RoomId}>{r.RoomId}</option>
+                                    )
+                                })}
+                                </select>
+                            </div>
 
                                 {TSId == 0 ?
                                     <button type="button"
